@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMA | Grupo de Eventos y Experiencias</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --gold: #d4af37;
+      --dark: #0a0a0a;
+      --dark-accent: #1a1a1a;
+      --whatsapp-green: #25d366;
+      --insta-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--dark);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    /* --- MENÚ MÁS DE NOSOTROS --- */
+    .more-info-trigger {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1002;
+      color: var(--gold);
+      font-size: 24px;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.5);
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: 0.3s;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+    }
+
+    .more-info-trigger:hover {
+      background: var(--gold);
+      color: black;
+    }
+
+    .side-panel {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 100%;
+      max-width: 500px;
+      height: 100%;
+      background: #0f0f0f;
+      z-index: 2000;
+      transition: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.8);
+      padding: 40px;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+
+    .side-panel.active {
+      right: 0;
+    }
+
+    .close-panel {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 30px;
+      color: var(--gold);
+      cursor: pointer;
+    }
+
+    .panel-content h2 {
+      font-family: 'Playfair Display';
+      color: var(--gold);
+      border-bottom: 1px solid var(--gold);
+      padding-bottom: 10px;
+      margin-top: 40px;
+    }
+
+    .panel-content h3 {
+      color: var(--gold);
+      font-size: 1.1rem;
+      margin-top: 25px;
+    }
+
+    .panel-content p,
+    .panel-content li {
+      font-size: 0.9rem;
+      color: #ccc;
+      line-height: 1.6;
+    }
+
+    .panel-content ul {
+      padding-left: 20px;
+    }
+
+    .copyright-clause {
+      font-size: 0.7rem !important;
+      color: #555 !important;
+      font-style: italic;
+      margin-top: 50px;
+      border-top: 1px solid #222;
+      padding-top: 20px;
+    }
+
+    /* --- BOTONES FLOTANTES --- */
+    .floating-container {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 1001;
+    }
+
+    .float-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 30px;
+      text-decoration: none;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+      transition: 0.3s;
+    }
+
+    .btn-whatsapp {
+      background-color: var(--whatsapp-green);
+      animation: pulse-green 2s infinite;
+    }
+
+    .btn-insta {
+      background: var(--insta-gradient);
+      animation: pulse-insta 2s infinite;
+    }
+
+    @keyframes pulse-green {
+      0% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+      }
+
+      70% {
+        box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+      }
+    }
+
+    @keyframes pulse-insta {
+      0% {
+        box-shadow: 0 0 0 0 rgba(204, 35, 102, 0.7);
+      }
+
+      70% {
+        box-shadow: 0 0 0 15px rgba(204, 35, 102, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(204, 35, 102, 0);
+      }
+    }
+
+    /* --- HEADER Y LOGO MEJORADO --- */
+    header {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=2069') no-repeat center center/cover;
+      padding: 0 20px;
+    }
+
+    .logo-ama {
+      max-width: 320px;
+      width: 75%;
+      height: auto;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3)) brightness(1.1);
+      transition: 0.5s;
+    }
+
+    .logo-ama:hover {
+      transform: scale(1.02);
+      filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5));
+    }
+
+    header p {
+      letter-spacing: 4px;
+      font-weight: 300;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      color: #eee;
+    }
+
+    section {
+      padding: 80px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: #ccc;
+      margin-bottom: 50px;
+      font-weight: 300;
+    }
+
+    /* --- SERVICIOS --- */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--dark-accent);
+      padding: 30px 20px;
+      border-radius: 15px;
+      text-align: center;
+      border: 1px solid #333;
+      transition: 0.4s ease;
+    }
+
+    .card:hover {
+      border-color: var(--gold);
+      transform: translateY(-10px);
+    }
+
+    .card i {
+      font-size: 2.5rem;
+      color: var(--gold);
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--gold);
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    /* --- PAQUETES --- */
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .pkg-card {
+      background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+      padding: 40px 30px;
+      border-radius: 20px;
+      border: 1px solid var(--gold);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .pkg-card h3 {
+      color: var(--gold);
+      font-family: 'Playfair Display';
+      font-size: 1.8rem;
+      margin-top: 0;
+    }
+
+    .pkg-card ul {
+      list-style: none;
+      padding: 0;
+      text-align: left;
+      margin: 20px 0;
+    }
+
+    .pkg-card ul li {
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      border-bottom: 1px solid #222;
+      padding-bottom: 5px;
+    }
+
+    .pkg-card ul li i {
+      color: var(--gold);
+      margin-right: 10px;
+    }
+
+    /* --- MURAL --- */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .gallery-item {
+      background: #111;
+      border-radius: 15px;
+      overflow: hidden;
+      border: 1px solid #333;
+      height: 450px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gallery-item img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      transition: 0.5s;
+    }
+
+    /* --- FAQ --- */
+    .faq-item {
+      background: var(--dark-accent);
+      margin-bottom: 10px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      overflow: hidden;
+    }
+
+    .faq-item.hidden {
+      display: none;
+    }
+
+    .faq-question {
+      width: 100%;
+      padding: 18px;
+      background: none;
+      border: none;
+      color: var(--gold);
+      text-align: left;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Poppins';
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: 0.3s ease-out;
+      background: #151515;
+    }
+
+    .faq-answer p {
+      padding: 20px;
+      margin: 0;
+      color: #ccc;
+      line-height: 1.6;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 500px;
+    }
+
+    .faq-item.active .faq-question i {
+      transform: rotate(180deg);
+    }
+
+    /* --- BOTONES --- */
+    .btn {
+      background: var(--gold);
+      color: black;
+      padding: 18px 45px;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: bold;
+      display: inline-block;
+      transition: 0.3s;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      font-family: 'Poppins';
+    }
+
+    .btn:hover {
+      background: white;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+    }
+
+    .btn-ver-mas {
+      display: block;
+      margin: 30px auto;
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 12px 35px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-family: 'Poppins';
+      transition: 0.3s;
+    }
+
+    .btn-ver-mas:hover {
+      background: var(--gold);
+      color: black;
+    }
+
+    footer {
+      text-align: center;
+      padding: 60px 20px;
+      color: #666;
+      font-size: 0.8rem;
+      border-top: 1px solid #222;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="more-info-trigger" onclick="togglePanel()">
+    <i class="fas fa-ellipsis-v"></i>
+  </div>
+
+  <div class="side-panel" id="sidePanel">
+    <span class="close-panel" onclick="togglePanel()">&times;</span>
+    <div class="panel-content">
+      <h2>Más de Nosotros</h2>
+
+      <h3>MISIÓN</h3>
+      <p>AMA Grupo de Eventos y Experiencias tiene como misión concebir, diseñar y ejecutar eventos y experiencias personalizadas que transformen momentos significativos en recuerdos memorables, mediante un enfoque humano, creativo y estratégico.</p>
+
+      <h3>VISIÓN</h3>
+      <p>Consolidarse como una marca referente en la creación de eventos y experiencias personalizadas, reconocida por su enfoque emocional, su sensibilidad estética y su compromiso con la calidad.</p>
+
+      <h3>VALORES CORPORATIVOS</h3>
+      <ul>
+        <li><strong>Exclusividad:</strong> Cada evento es una obra única.</li>
+        <li><strong>Compromiso:</strong> Responsabilidad y coherencia.</li>
+        <li><strong>Creatividad con propósito:</strong> Soluciones estratégicas y emocionales.</li>
+        <li><strong>Atención al detalle:</strong> Esencial para la calidad.</li>
+        <li><strong>Cercanía profesional:</strong> Escucha activa y transparencia.</li>
+        <li><strong>Excelencia integral:</strong> Mejora continua en cada proceso.</li>
+      </ul>
+
+      <h3>OBJETIVO GENERAL</h3>
+      <p>Diseñar y ejecutar eventos y experiencias memorables que superen las expectativas del cliente, fortaleciendo el posicionamiento de AMA como una marca diferenciada.</p>
+
+      <h3>OBJETIVOS ESPECÍFICOS</h3>
+      <ul>
+        <li>Desarrollar experiencias alineadas con el propósito del cliente.</li>
+        <li>Garantizar altos estándares de calidad operativa.</li>
+        <li>Construir relaciones duraderas con clientes y proveedores.</li>
+        <li>Innovar de manera constante en formatos y propuestas.</li>
+      </ul>
+
+      <p class="copyright-clause">
+        El presente contenido corresponde a una obra original creada exclusivamente para AMA Grupo de Eventos y Experiencias. Queda prohibida su reproducción sin autorización expresa.
+      </p>
+    </div>
+  </div>
+
+  <div class="floating-container">
+    <a href="https://www.instagram.com/AMA.EVENTOS.EXPERIENCIAS" class="float-btn btn-insta" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://wa.me/573002039975?text=Hola%20AMA,%20quiero%20cotizar%20un%20evento." class="float-btn btn-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i></a>
+  </div>
+
+  <header>
+    <img src="https://i.ibb.co/0pSKGj2h/612067499-17852192895605501-7346069979131350917-n.jpg" alt="AMA Logo" class="logo-ama">
+    <p>Experiencias que perduran en el tiempo</p>
+    <a href="https://wa.me/573002039975?text=Hola%20AMA,%20me%20gustaría%20cotizar%20un%20evento." class="btn" target="_blank">Cotizar ahora</a>
+  </header>
+
+  <section id="servicios">
+    <h2 class="section-title">Nuestras Experiencias</h2>
+    <div class="services-grid">
+      <div class="card"><i class="fas fa-child"></i>
+        <h3>Recreación Infantil</h3>
+        <p>Fiestas llenas de magia.</p>
+      </div>
+      <div class="card"><i class="fas fa-crown"></i>
+        <h3>Quince Años</h3>
+        <p>Planeación elegante.</p>
+      </div>
+      <div class="card"><i class="fas fa-church"></i>
+        <h3>Sociales</h3>
+        <p>Bautismos y Comuniones.</p>
+      </div>
+      <div class="card"><i class="fas fa-baby"></i>
+        <h3>Baby Shower</h3>
+        <p>Celebraciones únicas.</p>
+      </div>
+      <div class="card"><i class="fas fa-glass-cheers"></i>
+        <h3>Despedidas</h3>
+        <p>Eventos temáticos.</p>
+      </div>
+      <div class="card"><i class="fas fa-building"></i>
+        <h3>Empresariales</h3>
+        <p>Logística corporativa.</p>
+      </div>
+      <div class="card"><i class="fas fa-utensils"></i>
+        <h3>Catering</h3>
+        <p>Alta gastronomía.</p>
+      </div>
+      <div class="card"><i class="fas fa-magic"></i>
+        <h3>Decoración</h3>
+        <p>Ambientación integral.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="paquetes">
+    <h2 class="section-title">🎁 Paquetes Especiales</h2>
+    <div class="packages-grid">
+      <div class="pkg-card">
+        <div>
+          <h3>Esencial</h3>
+          <p>Para reuniones íntimas</p>
+          <ul>
+            <li><i class="fas fa-check"></i> Decoración Básica</li>
+            <li><i class="fas fa-check"></i> Montaje y Desmontaje</li>
+          </ul>
+        </div>
+        <a href="https://wa.me/573002039975?text=Hola%20AMA,%20me%20interesa%20el%20Paquete%20Esencial" class="btn" target="_blank" style="padding: 12px 25px; font-size: 0.8rem;">Cotizar</a>
+      </div>
+      <div class="pkg-card">
+        <div>
+          <h3>Clásico</h3>
+          <p>El balance perfecto</p>
+          <ul>
+            <li><i class="fas fa-check"></i> Decoración Temática</li>
+            <li><i class="fas fa-check"></i> Mesa Principal Completa</li>
+          </ul>
+        </div>
+        <a href="https://wa.me/573002039975?text=Hola%20AMA,%20me%20interesa%20el%20Paquete%20Clásico" class="btn" target="_blank" style="padding: 12px 25px; font-size: 0.8rem;">Cotizar</a>
+      </div>
+      <div class="pkg-card">
+        <div>
+          <h3>Premium</h3>
+          <p>Máxima elegancia</p>
+          <ul>
+            <li><i class="fas fa-check"></i> Diseño Personalizado Exclusivo</li>
+            <li><i class="fas fa-check"></i> Mobiliario de Lujo</li>
+          </ul>
+        </div>
+        <a href="https://wa.me/573002039975?text=Hola%20AMA,%20me%20interesa%20el%20Paquete%20Premium" class="btn" target="_blank" style="padding: 12px 25px; font-size: 0.8rem;">Cotizar</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="mural">
+    <h2 class="section-title">Mural de Momentos</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="https://i.ibb.co/Q7q3hbMp/611629783-17852356527605501-7108710372920688406-n.webp"></div>
+      <div class="gallery-item"><img src="https://i.ibb.co/hJN7KnG4/612101129-17852202297605501-2666688068108254069-n.webp"></div>
+      <div class="gallery-item"><img src="https://i.ibb.co/23n74dzp/612199481-17852201958605501-5827326592102443199-n.webp"></div>
+      <div class="gallery-item"><img src="https://i.ibb.co/PZKp4wgh/612222991-17852201502605501-3960220264727827464-n.webp"></div>
+      <div class="gallery-item"><img src="https://i.ibb.co/Lz7BwWWG/612491185-17852201700605501-8307735806548538336-n.webp"></div>
+      <div class="gallery-item"><img src="https://i.ibb.co/Xf3dM0Wp/612746575-17852202465605501-8569095861508160214-n.webp"></div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <h2 class="section-title">Preguntas Frecuentes</h2>
+    <div id="faq-list">
+      <div class="faq-item"><button class="faq-question">1. ¿Qué tipo de eventos realiza AMA? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer">
+          <p>Realizamos eventos sociales (bodas, 15 años), familiares (cumpleaños, baby showers) y corporativos.</p>
+        </div>
+      </div>
+      <div class="faq-item"><button class="faq-question">2. ¿Los eventos son personalizados? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer">
+          <p>Sí. 100% personalizados según tus gustos, temática y presupuesto.</p>
+        </div>
+      </div>
+      <div class="faq-item"><button class="faq-question">3. ¿En qué ciudades prestan el servicio? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer">
+          <p>Consulta disponibilidad de cobertura geográfica directamente por nuestro WhatsApp.</p>
+        </div>
+      </div>
+
+      <div class="faq-item hidden"><button class="faq-question">4. ¿Con cuánta anticipación debo reservar? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer">
+          <p>Mínimo 15 días para eventos pequeños y de 1 a 3 meses para eventos grandes.</p>
+        </div>
+      </div>
+      <div class="faq-item hidden"><button class="faq-question">5. ¿Qué incluyen los paquetes de AMA? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer">
+          <p>Asesoría, diseño, montaje decorativo, mobiliario (según paquete) y coordinación.</p>
+        </div>
+      </div>
+      <div class="faq-item hidden"><button class="faq-question">6. ¿Puedo contratar solo decoración? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer">
+          <p>Sí, ofrecemos servicios individuales de decoración y ambientación.</p>
+        </div>
+      </div>
+      <div class="faq-item hidden"><button class="faq-question">7. ¿Manejan diferentes presupuestos? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer">
+          <p>Sí, nos adaptamos manteniendo nuestra calidad en cada nivel de inversión.</p>
+        </div>
+      </div>
+      <div class="faq-item hidden"><button class="faq-question">8. ¿Cómo se realiza el pago? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer">
+          <p>Se requiere un anticipo para reservar la fecha y el saldo según el contrato.</p>
+        </div>
+      </div>
+      <div class="faq-item hidden"><button class="faq-question">9. ¿Qué métodos de pago aceptan? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer">
+          <p>Transferencias bancarias y pagos digitales (Nequi/Daviplata).</p>
+        </div>
+      </div>
+      <div class="faq-item hidden"><button class="faq-question">10. ¿Qué pasa si necesito cancelar? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer">
+          <p>Contamos con políticas de cancelación informadas al momento de la reserva.</p>
+        </div>
+      </div>
+      <div class="faq-item hidden"><button class="faq-question">11. ¿Se encargan del montaje? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer">
+          <p>Sí, realizamos el montaje y desmontaje completo para tu tranquilidad.</p>
+        </div>
+      </div>
+      <div class="faq-item hidden"><button class="faq-question">12. ¿Cómo solicito cotización? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer">
+          <p>Escríbenos al WhatsApp y enviaremos una propuesta detallada.</p>
+        </div>
+      </div>
+      <div class="faq-item hidden"><button class="faq-question">13. ¿Por qué elegir a AMA? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer">
+          <p>Porque cuidamos cada detalle con pasión para crear momentos que perduran en el tiempo.</p>
+        </div>
+      </div>
+    </div>
+    <button id="btn-show-more" class="btn-ver-mas">Ver más preguntas</button>
+  </section>
+
+  <footer>
+    &copy; 2026 AMA - Grupo de Eventos y Experiencias.<br>
+    © AMA Grupo de Eventos y Experiencias.<br>
+    Todos los derechos reservados. Prohibida su reproducción total o parcial sin autorización escrita.
+  </footer>
+
+  <script>
+    // Función para el panel lateral
+    function togglePanel() {
+      document.getElementById('sidePanel').classList.toggle('active');
+    }
+    // Acordeón
+    document.querySelectorAll('.faq-question').forEach(button => {
+      button.addEventListener('click', () => {
+        const item = button.parentElement;
+        item.classList.toggle('active');
+      });
+    });
+    // Ver más
+    document.getElementById('btn-show-more').addEventListener('click', function() {
+      document.querySelectorAll('.faq-item.hidden').forEach(el => el.classList.remove('hidden'));
+      this.style.display = 'none';
+    });
+  </script>
+</body>
+
+</html>
